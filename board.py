@@ -21,18 +21,18 @@ class Board():
         for i in range(3):
             for j in range(4):
                 if i % 2 == 0:
-                    piece = Piece((i, 1 + j*2), self.sqr_width, self.sqr_height)
+                    piece = Piece([i, 1 + j*2], self.sqr_width, self.sqr_height)
                 else:
-                    piece = Piece((i, j*2), self.sqr_width, self.sqr_height)
+                    piece = Piece([i, j*2], self.sqr_width, self.sqr_height)
                 piece.black = True
                 self.blackPieces.append(piece)
 
         for i in range(3):
             for j in range(4):
                 if i % 2 == 0:
-                    piece = Piece((self.rows - i, j*2), self.sqr_width, self.sqr_height)
+                    piece = Piece([self.rows - i - 1, j*2], self.sqr_width, self.sqr_height)
                 else:
-                    piece = Piece((self.rows - i, 1 + j*2), self.sqr_width, self.sqr_height)
+                    piece = Piece([self.rows - i - 1, 1 + j*2], self.sqr_width, self.sqr_height)
                 piece.white = True
                 self.whitePieces.append(piece)
 

@@ -7,7 +7,7 @@ win = pg.display.set_mode((board.width, board.height))
 pg.display.set_caption("Checkers")
 
 
-def draw():
+def RedrawGameWindow():
     board.draw(win)
     for blackPiece in board.blackPieces:
         blackPiece.draw(win)
@@ -20,6 +20,7 @@ def main():
     run = True
     clock = pg.time.Clock()
     board.initiateBoard()
+    currentPlayer = 1
 
     while run:
         clock.tick(27)
@@ -30,8 +31,14 @@ def main():
                 run = False
 
             if e.type == pg.MOUSEBUTTONDOWN:
-                pass
+                mousePos = pg.mouse.get_pos()
+                if currentPlayer == 1:
+                    for whitePiece in board.whitePieces:
+                        if whitePiece.clicked(mousePos):
+                            pass
+                elif currentPlayer == -1:
+                    pass
 
-        draw()
+        RedrawGameWindow()
 
 main()
