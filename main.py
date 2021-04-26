@@ -9,12 +9,17 @@ pg.display.set_caption("Checkers")
 
 def draw():
     board.draw(win)
+    for blackPiece in board.blackPieces:
+        blackPiece.draw(win)
+    for whitePiece in board.whitePieces:
+        whitePiece.draw(win)
     pg.display.update()
 
 #Main Loop
 def main():
     run = True
     clock = pg.time.Clock()
+    board.initiateBoard()
 
     while run:
         clock.tick(27)
