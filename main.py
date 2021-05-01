@@ -1,18 +1,30 @@
 import pygame as pg
 from board import Board
+from info import boardWidth, boardHeight
 
 board = Board()
 
-win = pg.display.set_mode((board.width, board.height))
+win = pg.display.set_mode((boardWidth, boardHeight))
 pg.display.set_caption("Checkers")
 
+def ValidClicked(mousePos, currentPlayer):
+    for rowPieces in board.board:
+        for piece in rowPieces:
+            if piece != 0:
+                if currentPlayer == 1 and piece.white:
+                    if piece.clicked(mousePos):
+                        return piece
+                elif currentPlayer == -1 and piece.black:
+                    if piece.clicked(mousePos):
+                        return piece
+    return False
 
 def RedrawGameWindow():
     board.draw(win)
-    for blackPiece in board.blackPieces:
-        blackPiece.draw(win)
-    for whitePiece in board.whitePieces:
-        whitePiece.draw(win)
+    for rowPieces in board.board:
+        for piece in rowPieces:
+            if piece != 0:
+                piece.draw(win)
     pg.display.update()
 
 #Main Loop
@@ -33,9 +45,10 @@ def main():
             if e.type == pg.MOUSEBUTTONDOWN:
                 mousePos = pg.mouse.get_pos()
                 if currentPlayer == 1:
-                    for whitePiece in board.whitePieces:
-                        if whitePiece.clicked(mousePos):
-                            pass
+                    clickedPiece = ValidClicked(mousePos, currentPlayer)
+                    if clickedPiece:
+                        board.PossibleLocation(clickedPiece)
+                        print(clickedPiece.possibleLocations)
                 elif currentPlayer == -1:
                     pass
 

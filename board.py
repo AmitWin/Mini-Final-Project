@@ -1,46 +1,76 @@
 import pygame as pg
 from piece import Piece
-
-yellow = [154, 205, 50]
-blue = [65, 105, 225]
-
+from info import yellow, blue, sqr_height, sqr_width, rows, cols, radius
 
 class Board():
     def __init__(self):
-        self.width = 600
-        self.height = 600
-        self.rows = 8
-        self.cols = 8
-        self.sqr_width = self.width / self.rows
-        self.sqr_height = self.height / self.cols
-        self.board = None
+        self.board = []
 
     def initiateBoard(self):
-        self.blackPieces = []
-        self.whitePieces = []
-        for i in range(3):
-            for j in range(4):
-                if i % 2 == 0:
-                    piece = Piece([i, 1 + j*2], self.sqr_width, self.sqr_height)
+        for row in range(rows):
+            self.board.append([])
+            for col in range(cols):
+                if col % 2 == ((row + 1) % 2):
+                    if row < 3:
+                        self.board[row].append(Piece([row, col], True))
+                    elif row > 4:
+                        self.board[row].append(Piece([row, col], False))
+                    else:
+                        self.board[row].append(0)
                 else:
-                    piece = Piece([i, j*2], self.sqr_width, self.sqr_height)
-                piece.black = True
-                self.blackPieces.append(piece)
-
-        for i in range(3):
-            for j in range(4):
-                if i % 2 == 0:
-                    piece = Piece([self.rows - i - 1, j*2], self.sqr_width, self.sqr_height)
-                else:
-                    piece = Piece([self.rows - i - 1, 1 + j*2], self.sqr_width, self.sqr_height)
-                piece.white = True
-                self.whitePieces.append(piece)
-
+                    self.board[row].append(0)
 
     def draw(self, win):
-        for i in range(self.rows):
-            for j in range(self.cols):
+        self.win = win
+        for i in range(rows):
+            for j in range(cols):
                 if (i + j) % 2 == 0:
-                    pg.draw.rect(win, yellow, (self.sqr_width * i, self.sqr_height * j, self.sqr_width, self.sqr_height))
+                    pg.draw.rect(win, yellow, (sqr_width * i, sqr_height * j, sqr_width, sqr_height))
                 elif (i + j) % 2 == 1:
-                    pg.draw.rect(win, blue, (self.sqr_width * i, self.sqr_height * j, self.sqr_width, self.sqr_height))
+                    pg.draw.rect(win, blue, (sqr_width * i, sqr_height * j, sqr_width, sqr_height))
+
+    def PossibleLocation(self, piece):
+        if piece.white:
+            if not piece.queen:
+                if piece.row < rows - 1:
+                    if 0 < piece.col:
+                        possibleLocation = self.board[piece.row - 1][piece.col - 1]
+                        if possibleLocation == 0:
+                            piece.possibleLocations.append([piece.row - 1, piece.col - 1])
+                        elif possibleLocation.black:
+                            if piece.row + 2 >= 0 and piece.col - 2 >= 0:
+                                if self.board[piece.row - 2, piece.col -2] == 0:
+                                    piece.possibleLocations.append([piece.row - 2, piece.col -2])
+                    if piece.col < cols - 1:
+                        possibleLocation = self.board[piece.row - 1][piece.col + 1]
+                        if possibleLocation == 0:
+                            piece.possibleLocations.append([piece.row - 1, piece.col + 1])
+                        elif possibleLocation.black:
+                            if piece.row - 2 <= 0 and piece.col + 2 <= 0:
+                                if self.board[piece.row - 2][piece.col + 2] == 0:
+                                    piece.possibleLocations.append([piece.row - 2, piece.col + 2])
+
+        if piece.black:
+            if not piece.queen:
+                if piece.row > 0:
+                    if 0 < piece.col:
+                        possibleLocation = self.board[piece.row + 1, piece.col - 1]
+                        if possibleLocation == 0:
+                            piece.possibleLocations.append([piece.row + 1, piece.col - 1])
+                        elif possibleLocation.black:
+                            if piece.row + 2 >= 0 and piece.col - 2 >= 0:
+                                if self.board[piece.row + 2, piece.col -2] == 0:
+                                    piece.possibleLocations.append([piece.row + 2, piece.col -2])
+                    if piece.col < cols - 1:
+                        possibleLocation = self.board[piece.row + 1, piece.col + 1]
+                        if possibleLocation == 0:
+                            piece.possibleLocations.append([piece.row + 1, piece.col + 1])
+                        elif possibleLocation.black:
+                            if piece.row + 2 <= 0 and piece.col + 2 <= 0:
+                                if self.board[piece.row + 2, piece.col + 2] == 0:
+                                    piece.possibleLocations.append([piece.row + 2, piece.col + 2])
+
+    def draw_possible_location(self, piece):
+        for location in piece.possibleLocations:
+            pg.draw.circle(self.win, black, self.position, radius)
+
