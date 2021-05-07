@@ -29,6 +29,12 @@ def adjust_location(location):
     position[1] = int(position[1])
     return position
 
+def adjust_position(position):
+    location = [position[1] // sqr_height, position[0] // sqr_width]
+    location[0] = int(location[0])
+    location[1] = int(location[1])
+    return location
+
 
 # Checks if a circle was clicked
 def clicked(position, mousePos):

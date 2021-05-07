@@ -1,16 +1,13 @@
 import pygame as pg
 from piece import Piece
-from info import yellow, blue, sqr_height, sqr_width, rows, cols, radius, adjust_location, clicked, win
+from info import yellow, blue, sqr_height, sqr_width, rows, cols, radius, adjust_location, clicked, win, adjust_position
+
 
 class Board():
     def __init__(self):
         self.board = []
 
     def initiateBoard(self):
-        """
-
-        :return:
-        """
         for row in range(rows):
             self.board.append([])
             for col in range(cols):
@@ -32,26 +29,29 @@ class Board():
                 elif (i + j) % 2 == 1:
                     pg.draw.rect(win, blue, (sqr_width * i, sqr_height * j, sqr_width, sqr_height))
 
-    def PossibleLocation(self, piece):
-        if piece.white:
-            if not piece.queen:
-                if piece.row >= 0:
-                    if piece.col < cols - 1:
-                        self.check_where_possible(piece, piece.row - 1, piece.col + 1, "right", "white")
-                    if 0 < piece.col:
-                        self.check_where_possible(piece, piece.row - 1, piece.col - 1, "left", "white")
+    def find_possible_moves(self, piece):
+        checker = lambda x, y: 0 <= x + y < 8
+        piece.possibleLocations = []
+        column, row = piece.col, piece.row
+        if self.board[row][column] != 0:
+            vectors = [[1, -1], [1, 1]] if self.board[row][column].black else [[-1, -1], [-1, 1]]
+            if self.board[row][column].queen:
+                vectors = [[1, -1], [1, 1], [-1, -1], [-1, 1]]
+            for vector in vectors:
+                rowVector, columnVector = vector
+                if checker(columnVector, column) and checker(rowVector, row):
+                    if self.board[row + rowVector][column + columnVector] == 0:
+                        piece.possibleLocations.append([row + rowVector, columnVector + column])
+                    elif self.board[row + rowVector][column + columnVector] != 0 and \
+                            self.board[row + rowVector][column + columnVector].white != self.board[row][column].white:
+                        if checker((2 * columnVector), column) and checker((2 * rowVector), row) \
+                                and self.board[2 * rowVector + row][2 * columnVector + column] == 0:
+                            piece.possibleLocations.append([2 * rowVector + row, 2 * columnVector + column])
 
-        if piece.black:
-            if not piece.queen:
-                if piece.row < rows:
-                    if 0 < piece.col:
-                        self.check_where_possible(piece, piece.row + 1, piece.col + 1, "right", "black")
-                    if piece.col < cols - 1:
-                        self.check_where_possible(piece, piece.row + 1, piece.col - 1, "left", "black")
-
+    def move(self, piece):
         pressed = False
         while not pressed:
-            self.draw_possible_locations(piece)
+            piece.highlight_possible_location()
 
             keys = pg.key.get_pressed()
             for event in pg.event.get():
@@ -60,41 +60,24 @@ class Board():
 
                 if event.type == pg.MOUSEBUTTONDOWN:
                     mousePos = pg.mouse.get_pos()
-                    for location in piece.possibleLocations:
-                        if clicked(adjust_location(location), mousePos):
-                            self.board[piece.row][piece.col] = 0
-                            pressed = True
-                        elif clicked(piece.position, mousePos):
-                            pressed = True
+                    mouseLoc = adjust_position(mousePos)
+                    if mouseLoc in piece.possibleLocations:
+                        self.board[piece.row][piece.col] = 0
+
+                        if abs(mouseLoc[0] - piece.row) == 2 or abs(mouseLoc[1] - piece.col) == 2:
+                            self.board[(mouseLoc[0] + piece.row) // 2][(mouseLoc[1] + piece.col) // 2] = 0
+
+                        self.update_location(piece, mouseLoc)
+                        piece.checks_if_become_queen()
+
+                    elif self.board[mouseLoc[0]][mouseLoc[1]] != 0 \
+                            and self.board[mouseLoc[0]][mouseLoc[1]].white == piece.white:
+                        return self.board[mouseLoc[0]][mouseLoc[1]]
+                    pressed = True
 
         piece.possibleLocations = []
+        return None
 
-    def check_where_possible(self, piece, row, col, direction, color):
-        """
-        The function checks which squares are available for the piece to go
-        :param piece: the piece we want to move
-        :param row: the row of the square we want to check if empty
-        :param col: the col of the square we want to check if empty
-        :param direction: right => 1, left => -1
-        :param color: white => 1, black => -1
-        :return: True if the piece ate another piece
-        """
-        ate = False
-        dirc = 1 if direction == "right" else -1
-        colour = 1 if color == "white" else -1
-        possibleLocation = self.board[row][col]
-        if possibleLocation == 0:
-            piece.possibleLocations.append([row, col])
-        elif possibleLocation.black:
-            if piece.row + 2*colour >= 0 and piece.col + 2*dirc >= 0:
-                if self.board[piece.row + 2*colour][piece.col + 2*dirc] == 0:
-                    piece.possibleLocations.append([piece.row + 2*colour, piece.col + 2*dirc])
-                    ate = True
-        return ate
-
-    def draw_possible_locations(self, piece):
-        for possibleLocation in piece.possibleLocations:
-            pos = adjust_location(possibleLocation)
-            pg.draw.circle(win, (128, 128, 128), pos, radius)
-        pg.display.update()
-
+    def update_location(self, piece, location):
+        self.board[location[0]][location[1]] = piece
+        piece.update_location(location)

@@ -1,6 +1,7 @@
 import pygame as pg
 from board import Board
 from info import boardWidth, boardHeight, clicked, win
+from network import Network
 
 board = Board()
 
@@ -18,7 +19,13 @@ def ValidClicked(mousePos, currentPlayer):
     return False
 
 
-def RedrawGameWindow():
+def RedrawGameWindow(game, p):
+    win.fill((128, 128, 128))
+    if not game.connected():
+        font = pg.font.SysFont('comicsans', 80)
+        text = font.render('Waiting for player...', 1, (255, 0, 0), True)
+        win.blit(text, (boardWidth // 2 - text.get_width() // 2, boardHeight // 2 - text.get_height() // 2))
+
     board.draw()
     for rowPieces in board.board:
         for piece in rowPieces:
@@ -32,11 +39,21 @@ def main():
     run = True
     clock = pg.time.Clock()
     board.initiateBoard()
-    currentPlayer = 1
+    n = Network()
+    currentPlayer = int(n.getP())
     RedrawGameWindow()
 
     while run:
         clock.tick(27)
+
+        try:
+            game = n.send("get")
+        except:
+            run = False
+            print("couldn't get game")
+            break
+
+        
 
         keys = pg.key.get_pressed()
         for event in pg.event.get():

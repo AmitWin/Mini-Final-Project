@@ -1,18 +1,42 @@
 import pygame as pg
-from info import black, white, radius, sqr_width, sqr_height, adjust_location, clicked, win
+from info import black, white, radius, sqr_width, sqr_height, adjust_location, clicked, win, rows
+
 
 class Piece():
     def __init__(self, location, isBlack):
         self.black = isBlack
         self.white = not isBlack
         self.queen = False
-        self.row = location[0]
-        self.col = location[1]
         self.possibleLocations = []
-        self.position = adjust_location(location)
+        self.update_location(location)
 
     def draw(self):
         if self.black:
-            pg.draw.circle(win, black, self.position, radius)
+            if not self.queen:
+                pg.draw.circle(win, black, self.position, radius)
+            else:
+                pg.draw.circle(win, black, self.position, radius, 10)
+
         elif self.white:
-            pg.draw.circle(win, white, self.position, radius)
+            if not self.queen:
+                pg.draw.circle(win, white, self.position, radius)
+            else:
+                pg.draw.circle(win, white, self.position, radius, 10)
+
+    def update_location(self, location):
+        self.row = location[0]
+        self.col = location[1]
+        self.position = adjust_location(location)
+
+    def highlight_possible_location(self):
+        for possibleLocation in self.possibleLocations:
+            pos = adjust_location(possibleLocation)
+            pg.draw.circle(win, (128, 128, 128), pos, radius)
+        pg.display.update()
+
+    def checks_if_become_queen(self):
+        if self.white and self.row == 0:
+            self.queen = True
+
+        elif self.black and self.row == rows - 1:
+            self.queen = True
