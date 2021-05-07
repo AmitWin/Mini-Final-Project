@@ -49,8 +49,9 @@ def main():
                 while clickedPiece:
                     board.find_possible_moves(clickedPiece)
                     clickedPiece = board.move(clickedPiece)
-                    if not clickedPiece:
+                    if clickedPiece == "moved":
                         currentPlayer *= -1
+                        clickedPiece = None
 
                     RedrawGameWindow()
 

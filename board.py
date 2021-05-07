@@ -70,6 +70,7 @@ class Board():
                         self.update_location(piece, mouseLoc)
                         piece.checks_if_become_queen()
 
+                        return "moved"
                     elif self.board[mouseLoc[0]][mouseLoc[1]] != 0 \
                             and self.board[mouseLoc[0]][mouseLoc[1]].white == piece.white:
                         return self.board[mouseLoc[0]][mouseLoc[1]]

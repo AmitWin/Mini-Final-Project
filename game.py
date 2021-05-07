@@ -4,8 +4,6 @@ class Game:
         self.ready = False
         self.id = id
         self.moves = [None, None]
-        self.wins = [0, 0]
-        self.ties = 0
 
     def get_player_move(self, p):
         return self.moves[p]

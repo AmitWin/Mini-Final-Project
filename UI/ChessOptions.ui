@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:black;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="MainLabel">
+    <property name="geometry">
+     <rect>
+      <x>207</x>
+      <y>30</y>
+      <width>185</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:white;
+font:bold 25px;
+</string>
+    </property>
+    <property name="text">
+     <string>Chess Options</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PlayVSComputer">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>120</y>
+      <width>300</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:grey;
+color:white;
+border-style:outset;
+border-width:2px;
+border-radius:10px;
+border-color:white;
+font:bold 14px;
+border-color:black;</string>
+    </property>
+    <property name="text">
+     <string>Play VS. computer</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PlayVSFriend">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>190</y>
+      <width>300</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:grey;
+color:white;
+border-style:outset;
+border-width:2px;
+border-radius:10px;
+border-color:white;
+font:bold 14px;
+border-color:black;</string>
+    </property>
+    <property name="text">
+     <string>Play VS. a friend</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PlayVSYourself">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>260</y>
+      <width>300</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:grey;
+color:white;
+border-style:outset;
+border-width:2px;
+border-radius:10px;
+border-color:white;
+font:bold 14px;
+border-color:black;</string>
+    </property>
+    <property name="text">
+     <string>Play VS. yourself</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
