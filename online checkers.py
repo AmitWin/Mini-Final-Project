@@ -1,7 +1,11 @@
 import pygame as pg
 from board import Board
 from info import boardWidth, boardHeight, clicked, win
-from network import Network
+from client import Client
+import time
+import pickle
+import os
+pg.font.init()
 
 board = Board()
 
@@ -37,11 +41,11 @@ def RedrawGameWindow(game, p):
 # Main Loop
 def main():
     run = True
+    turn = "w"
     clock = pg.time.Clock()
     board.initiateBoard()
-    n = Network()
+    n = Client()
     currentPlayer = int(n.getP())
-    RedrawGameWindow()
 
     while run:
         clock.tick(27)
@@ -64,12 +68,13 @@ def main():
                 mousePos = pg.mouse.get_pos()
                 clickedPiece = ValidClicked(mousePos, currentPlayer)
                 while clickedPiece:
-                    board.find_possible_moves(clickedPiece)
+                    board.update_moves(clickedPiece)
                     clickedPiece = board.move(clickedPiece)
                     if not clickedPiece:
-                        currentPlayer *= -1
+                        n.send(board.board)
 
-                    RedrawGameWindow()
+                    RedrawGameWindow(game, currentPlayer)
+        RedrawGameWindow(game, currentPlayer)
 
 
 main()

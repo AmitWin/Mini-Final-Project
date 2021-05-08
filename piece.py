@@ -8,7 +8,9 @@ class Piece():
         self.white = not isBlack
         self.queen = False
         self.possibleLocations = []
-        self.update_location(location)
+        self.row = location[0]
+        self.col = location[1]
+        self.position = adjust_location(location)
 
     def draw(self):
         if self.black:
@@ -23,10 +25,13 @@ class Piece():
             else:
                 pg.draw.circle(win, white, self.position, radius, 10)
 
-    def update_location(self, location):
+    def change_pos(self, location):
         self.row = location[0]
         self.col = location[1]
         self.position = adjust_location(location)
+
+    def __str__(self):
+        return str(self.col) + " " + str(self.row)
 
     def highlight_possible_location(self):
         for possibleLocation in self.possibleLocations:

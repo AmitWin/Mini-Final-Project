@@ -1,11 +1,28 @@
 import pygame as pg
 from piece import Piece
 from info import yellow, blue, sqr_height, sqr_width, rows, cols, radius, adjust_location, clicked, win, adjust_position
+import time
 
 
 class Board():
     def __init__(self):
         self.board = []
+
+        self.ready = False
+        self.last = None
+        self.copy = True
+
+        self.p1Name = "Player 1"
+        self.p2Name = "Player 2"
+
+        self.turn = "w"
+
+        self.time1 = 300
+        self.time2 = 300
+        self.startTime = time.time()
+
+        self.winner = None
+
 
     def initiateBoard(self):
         for row in range(rows):
@@ -29,7 +46,7 @@ class Board():
                 elif (i + j) % 2 == 1:
                     pg.draw.rect(win, blue, (sqr_width * i, sqr_height * j, sqr_width, sqr_height))
 
-    def find_possible_moves(self, piece):
+    def update_moves(self, piece):
         checker = lambda x, y: 0 <= x + y < 8
         piece.possibleLocations = []
         column, row = piece.col, piece.row
@@ -81,4 +98,4 @@ class Board():
 
     def update_location(self, piece, location):
         self.board[location[0]][location[1]] = piece
-        piece.update_location(location)
+        piece.change_pos(location)

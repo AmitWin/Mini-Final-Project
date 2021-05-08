@@ -1,3 +1,37 @@
+import subprocess
+import sys
+import pip_install
+
+
+def install(package):
+    subprocess.call([sys.executable, "-m", "pip", "install", package])
+
+
+try:
+    print("[GAME] Trying to import pygame")
+    import pygame
+except:
+    print("[EXCEPTION] Pygame not installed")
+
+    try:
+        print("[GAME] Trying to install pygame via pip")
+        import pip_install
+
+        install("pygame")
+        print("[GAME] Pygame has been installed")
+    except:
+        print("[EXCEPTION] Pip not installed on system")
+        print("[GAME] Trying to install pip")
+        pip_install.main()
+        print("[GAME] Pip has been installed")
+        try:
+            print("[GAME] Trying to install pygame")
+            import pip_install
+
+            install("pygame")
+            print("[GAME] Pygame has been installed")
+        except:
+            print("[ERROR 1] Pygame could not be installed")
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
@@ -8,11 +42,14 @@ db = mysql.connector.connect(
     user='root',
     passwd='wamit112233',
     database='LoginSystem'
-    )
+)
 
 mycursor = db.cursor()
 
-#mycursor.execute('CREATE TABLE Users (ID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username VARCHAR(50) NOT NULL, password VARCHAR(50) NOT NULL, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, birth_year int NOT NULL, email VARCHAR(50) NOT NULL)')
+
+# mycursor.execute('CREATE TABLE Users (ID int PRIMARY KEY NOT NULL AUTO_INCREMENT, username VARCHAR(50) NOT NULL,
+# password VARCHAR(50) NOT NULL, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, birth_year int NOT
+# NULL, email VARCHAR(50) NOT NULL)')
 
 class Ui_MainWindow(QMainWindow):
     def __init__(self):
@@ -44,54 +81,54 @@ class Ui_MainWindow(QMainWindow):
         self.UserName = QtWidgets.QLineEdit(self.centralwidget)
         self.UserName.setGeometry(QtCore.QRect(150, 125, 300, 35))
         self.UserName.setStyleSheet("background-color:white;\n"
-"color:grey;\n"
-"border-style:outset;\n"
-"border-width:2px;\n"
-"border-radius:10px;\n"
-"border-color:white;\n"
-"font:bold 14px;\n"
-"")
+                                    "color:grey;\n"
+                                    "border-style:outset;\n"
+                                    "border-width:2px;\n"
+                                    "border-radius:10px;\n"
+                                    "border-color:white;\n"
+                                    "font:bold 14px;\n"
+                                    "")
         self.UserName.setObjectName("UserName")
         self.Password = QtWidgets.QLineEdit(self.centralwidget)
         self.Password.setGeometry(QtCore.QRect(150, 170, 300, 35))
         self.Password.setStyleSheet("background-color:white;\n"
-"color:grey;\n"
-"border-style:outset;\n"
-"border-width:2px;\n"
-"border-radius:10px;\n"
-"border-color:white;\n"
-"font:bold 14px;\n"
-"")
+                                    "color:grey;\n"
+                                    "border-style:outset;\n"
+                                    "border-width:2px;\n"
+                                    "border-radius:10px;\n"
+                                    "border-color:white;\n"
+                                    "font:bold 14px;\n"
+                                    "")
         self.Password.setObjectName("Password")
         self.Submit = QtWidgets.QPushButton(self.centralwidget)
         self.Submit.setGeometry(QtCore.QRect(200, 230, 200, 35))
         self.Submit.setStyleSheet("background-color:red;\n"
-"color:white;\n"
-"border-style:outset;\n"
-"border-width:2px;\n"
-"border-radius:10px;\n"
-"border-color:white;\n"
-"font:bold 14px;\n"
-"border-color:black;\n"
-"")
+                                  "color:white;\n"
+                                  "border-style:outset;\n"
+                                  "border-width:2px;\n"
+                                  "border-radius:10px;\n"
+                                  "border-color:white;\n"
+                                  "font:bold 14px;\n"
+                                  "border-color:black;\n"
+                                  "")
         self.Submit.setObjectName("Submit")
         self.NewUser = QtWidgets.QPushButton(self.centralwidget)
         self.NewUser.setGeometry(QtCore.QRect(200, 270, 200, 35))
         self.NewUser.setStyleSheet("background-color:red;\n"
-"color:white;\n"
-"border-style:outset;\n"
-"border-width:2px;\n"
-"border-radius:10px;\n"
-"border-color:white;\n"
-"font:bold 14px;\n"
-"border-color:black;\n"
-"")
+                                   "color:white;\n"
+                                   "border-style:outset;\n"
+                                   "border-width:2px;\n"
+                                   "border-radius:10px;\n"
+                                   "border-color:white;\n"
+                                   "font:bold 14px;\n"
+                                   "border-color:black;\n"
+                                   "")
         self.NewUser.setObjectName("NewUser")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(220, 30, 141, 71))
         self.label.setStyleSheet("color:white;\n"
-"font:bold 25px;\n"
-"")
+                                 "font:bold 25px;\n"
+                                 "")
         self.label.setObjectName("label")
         self.Password.raise_()
         self.UserName.raise_()
@@ -166,92 +203,92 @@ class Ui_RegisterWindow(QMainWindow):
         self.RegisterLabel = QtWidgets.QLabel(self.centralwidget)
         self.RegisterLabel.setGeometry(QtCore.QRect(215, 10, 170, 50))
         self.RegisterLabel.setStyleSheet("color:white;\n"
-                                 "font:bold 35px;\n"
-                                 "")
+                                         "font:bold 35px;\n"
+                                         "")
         self.RegisterLabel.setObjectName("RegisterLabel")
         self.FirstName = QtWidgets.QLineEdit(self.centralwidget)
         self.FirstName.setGeometry(QtCore.QRect(70, 80, 200, 40))
         self.FirstName.setStyleSheet("background-color:white;\n"
+                                     "color:grey;\n"
+                                     "border-style:outset;\n"
+                                     "border-width:2px;\n"
+                                     "border-radius:10px;\n"
+                                     "border-color:white;\n"
+                                     "font:bold 14px;")
+        self.FirstName.setObjectName("FirstName")
+        self.BirthYear = QtWidgets.QLineEdit(self.centralwidget)
+        self.BirthYear.setGeometry(QtCore.QRect(70, 150, 200, 40))
+        self.BirthYear.setStyleSheet("background-color:white;\n"
+                                     "color:grey;\n"
+                                     "border-style:outset;\n"
+                                     "border-width:2px;\n"
+                                     "border-radius:10px;\n"
+                                     "border-color:white;\n"
+                                     "font:bold 14px;")
+        self.BirthYear.setObjectName("BirthYear")
+        self.Username = QtWidgets.QLineEdit(self.centralwidget)
+        self.Username.setGeometry(QtCore.QRect(70, 220, 200, 40))
+        self.Username.setStyleSheet("background-color:white;\n"
                                     "color:grey;\n"
                                     "border-style:outset;\n"
                                     "border-width:2px;\n"
                                     "border-radius:10px;\n"
                                     "border-color:white;\n"
                                     "font:bold 14px;")
-        self.FirstName.setObjectName("FirstName")
-        self.BirthYear = QtWidgets.QLineEdit(self.centralwidget)
-        self.BirthYear.setGeometry(QtCore.QRect(70, 150, 200, 40))
-        self.BirthYear.setStyleSheet("background-color:white;\n"
-                                      "color:grey;\n"
-                                      "border-style:outset;\n"
-                                      "border-width:2px;\n"
-                                      "border-radius:10px;\n"
-                                      "border-color:white;\n"
-                                      "font:bold 14px;")
-        self.BirthYear.setObjectName("BirthYear")
-        self.Username = QtWidgets.QLineEdit(self.centralwidget)
-        self.Username.setGeometry(QtCore.QRect(70, 220, 200, 40))
-        self.Username.setStyleSheet("background-color:white;\n"
-                                      "color:grey;\n"
-                                      "border-style:outset;\n"
-                                      "border-width:2px;\n"
-                                      "border-radius:10px;\n"
-                                      "border-color:white;\n"
-                                      "font:bold 14px;")
         self.Username.setObjectName("Username")
         self.LastName = QtWidgets.QLineEdit(self.centralwidget)
         self.LastName.setGeometry(QtCore.QRect(340, 80, 200, 40))
         self.LastName.setStyleSheet("background-color:white;\n"
-                                      "color:grey;\n"
-                                      "border-style:outset;\n"
-                                      "border-width:2px;\n"
-                                      "border-radius:10px;\n"
-                                      "border-color:white;\n"
-                                      "font:bold 14px;")
+                                    "color:grey;\n"
+                                    "border-style:outset;\n"
+                                    "border-width:2px;\n"
+                                    "border-radius:10px;\n"
+                                    "border-color:white;\n"
+                                    "font:bold 14px;")
         self.LastName.setObjectName("LastName")
         self.EmailAdress = QtWidgets.QLineEdit(self.centralwidget)
         self.EmailAdress.setGeometry(QtCore.QRect(340, 150, 200, 40))
         self.EmailAdress.setStyleSheet("background-color:white;\n"
-                                      "color:grey;\n"
-                                      "border-style:outset;\n"
-                                      "border-width:2px;\n"
-                                      "border-radius:10px;\n"
-                                      "border-color:white;\n"
-                                      "font:bold 14px;")
+                                       "color:grey;\n"
+                                       "border-style:outset;\n"
+                                       "border-width:2px;\n"
+                                       "border-radius:10px;\n"
+                                       "border-color:white;\n"
+                                       "font:bold 14px;")
         self.EmailAdress.setObjectName("EmailAdress")
         self.Password = QtWidgets.QLineEdit(self.centralwidget)
         self.Password.setGeometry(QtCore.QRect(340, 220, 200, 40))
         self.Password.setStyleSheet("background-color:white;\n"
-                                      "color:grey;\n"
-                                      "border-style:outset;\n"
-                                      "border-width:2px;\n"
-                                      "border-radius:10px;\n"
-                                      "border-color:white;\n"
-                                      "font:bold 14px;")
+                                    "color:grey;\n"
+                                    "border-style:outset;\n"
+                                    "border-width:2px;\n"
+                                    "border-radius:10px;\n"
+                                    "border-color:white;\n"
+                                    "font:bold 14px;")
         self.Password.setObjectName("Password")
         self.Register = QtWidgets.QPushButton(self.centralwidget)
         self.Register.setGeometry(QtCore.QRect(200, 280, 200, 35))
         self.Register.setStyleSheet("background-color:red;\n"
-                                   "color:white;\n"
-                                   "border-style:outset;\n"
-                                   "border-width:2px;\n"
-                                   "border-radius:10px;\n"
-                                   "border-color:white;\n"
-                                   "font:bold 14px;\n"
-                                   "border-color:black;\n"
-                                   "")
+                                    "color:white;\n"
+                                    "border-style:outset;\n"
+                                    "border-width:2px;\n"
+                                    "border-radius:10px;\n"
+                                    "border-color:white;\n"
+                                    "font:bold 14px;\n"
+                                    "border-color:black;\n"
+                                    "")
         self.Register.setObjectName("Register")
         self.Back = QtWidgets.QPushButton(self.centralwidget)
         self.Back.setGeometry(QtCore.QRect(200, 330, 200, 35))
         self.Back.setStyleSheet("background-color:red;\n"
-                                   "color:white;\n"
-                                   "border-style:outset;\n"
-                                   "border-width:2px;\n"
-                                   "border-radius:10px;\n"
-                                   "border-color:white;\n"
-                                   "font:bold 14px;\n"
-                                   "border-color:black;\n"
-                                   "")
+                                "color:white;\n"
+                                "border-style:outset;\n"
+                                "border-width:2px;\n"
+                                "border-radius:10px;\n"
+                                "border-color:white;\n"
+                                "font:bold 14px;\n"
+                                "border-color:black;\n"
+                                "")
         self.Back.setObjectName("Back")
         Registration.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(Registration)
@@ -291,7 +328,9 @@ class Ui_RegisterWindow(QMainWindow):
                 elif exist_first_name == "" or exist_user == "" or exist_passw == "" or exist_last_name == "" or exist_email == "":
                     exist = True
         if not exist:
-            mycursor.execute("INSERT INTO Users (username, password, first_name, last_name, birth_year, email) VALUES (%s,%s,%s,%s,%s,%s)", (username, password, firstName, lastName, birthYear, email))
+            mycursor.execute(
+                "INSERT INTO Users (username, password, first_name, last_name, birth_year, email) VALUES (%s,%s,%s,%s,%s,%s)",
+                (username, password, firstName, lastName, birthYear, email))
             db.commit()
             self.openWindow()
 
@@ -329,6 +368,7 @@ class Ui_RegisterWindow(QMainWindow):
         self.Back.setText(_translate("Registration", "Back"))
         self.Register.setText(_translate("Registration", "Register"))
 
+
 class Ui_CheckersOptions(object):
     def setupUi(self, CheckersOptions):
         self.CheckersOptions = CheckersOptions
@@ -340,41 +380,41 @@ class Ui_CheckersOptions(object):
         self.MainLabel = QtWidgets.QLabel(self.centralwidget)
         self.MainLabel.setGeometry(QtCore.QRect(207, 30, 185, 71))
         self.MainLabel.setStyleSheet("color:white;\n"
-"font:bold 25px;\n"
-"")
+                                     "font:bold 25px;\n"
+                                     "")
         self.MainLabel.setObjectName("MainLabel")
         self.PlayVSComputer = QtWidgets.QPushButton(self.centralwidget)
         self.PlayVSComputer.setGeometry(QtCore.QRect(100, 120, 300, 50))
         self.PlayVSComputer.setStyleSheet("background-color:grey;\n"
-"color:white;\n"
-"border-style:outset;\n"
-"border-width:2px;\n"
-"border-radius:10px;\n"
-"border-color:white;\n"
-"font:bold 14px;\n"
-"border-color:black;")
+                                          "color:white;\n"
+                                          "border-style:outset;\n"
+                                          "border-width:2px;\n"
+                                          "border-radius:10px;\n"
+                                          "border-color:white;\n"
+                                          "font:bold 14px;\n"
+                                          "border-color:black;")
         self.PlayVSComputer.setObjectName("PlayVSComputer")
         self.PlayVSFriend = QtWidgets.QPushButton(self.centralwidget)
         self.PlayVSFriend.setGeometry(QtCore.QRect(100, 190, 300, 50))
         self.PlayVSFriend.setStyleSheet("background-color:grey;\n"
-"color:white;\n"
-"border-style:outset;\n"
-"border-width:2px;\n"
-"border-radius:10px;\n"
-"border-color:white;\n"
-"font:bold 14px;\n"
-"border-color:black;")
+                                        "color:white;\n"
+                                        "border-style:outset;\n"
+                                        "border-width:2px;\n"
+                                        "border-radius:10px;\n"
+                                        "border-color:white;\n"
+                                        "font:bold 14px;\n"
+                                        "border-color:black;")
         self.PlayVSFriend.setObjectName("PlayVSFriend")
         self.PlayVSYourself = QtWidgets.QPushButton(self.centralwidget)
         self.PlayVSYourself.setGeometry(QtCore.QRect(100, 260, 300, 50))
         self.PlayVSYourself.setStyleSheet("background-color:grey;\n"
-"color:white;\n"
-"border-style:outset;\n"
-"border-width:2px;\n"
-"border-radius:10px;\n"
-"border-color:white;\n"
-"font:bold 14px;\n"
-"border-color:black;")
+                                          "color:white;\n"
+                                          "border-style:outset;\n"
+                                          "border-width:2px;\n"
+                                          "border-radius:10px;\n"
+                                          "border-color:white;\n"
+                                          "font:bold 14px;\n"
+                                          "border-color:black;")
         self.PlayVSYourself.setObjectName("PlayVSYourself")
         CheckersOptions.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(CheckersOptions)
@@ -391,7 +431,7 @@ class Ui_CheckersOptions(object):
     def runCheckers(self):
         self.CheckersOptions.close()
         import checkers
-        
+
     def retranslateUi(self, CheckersOptions):
         _translate = QtCore.QCoreApplication.translate
         CheckersOptions.setWindowTitle(_translate("CheckersOptions", "Checkers Options"))
@@ -400,8 +440,10 @@ class Ui_CheckersOptions(object):
         self.PlayVSFriend.setText(_translate("CheckersOptions", "Play VS. a friend"))
         self.PlayVSYourself.setText(_translate("CheckersOptions", "Play VS. yourself"))
 
+
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

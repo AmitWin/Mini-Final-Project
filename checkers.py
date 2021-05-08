@@ -47,7 +47,7 @@ def main():
                 mousePos = pg.mouse.get_pos()
                 clickedPiece = ValidClicked(mousePos, currentPlayer)
                 while clickedPiece:
-                    board.find_possible_moves(clickedPiece)
+                    board.update_moves(clickedPiece)
                     clickedPiece = board.move(clickedPiece)
                     if clickedPiece == "moved":
                         currentPlayer *= -1
