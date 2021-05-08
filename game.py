@@ -1,9 +1,3 @@
-'''
-the main game
-author:@techwithtim
-requirements:see requirements.txt
-'''
-
 import subprocess
 import sys
 import pip_install
@@ -44,15 +38,11 @@ import os
 import time
 from client import Client
 import pickle
+from info import boardWidth, boardHeight
 
 pygame.font.init()
 
-board = pygame.transform.scale(pygame.image.load(os.path.join("img", "board_alt.png")), (750, 750))
-chessbg = pygame.image.load(os.path.join("img", "chessbg.png"))
-rect = (113, 113, 525, 525)
-
 turn = "w"
-
 
 def menu_screen(win, name):
     global bo, chessbg
@@ -62,13 +52,13 @@ def menu_screen(win, name):
     while run:
         win.blit(chessbg, (0, 0))
         small_font = pygame.font.SysFont("comicsans", 50)
-
+        """
         if offline:
             off = small_font.render("Server Offline, Try Again Later...", 1, (255, 0, 0))
             win.blit(off, (width / 2 - off.get_width() / 2, 500))
 
         pygame.display.update()
-
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

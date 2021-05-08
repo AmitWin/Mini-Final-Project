@@ -65,6 +65,9 @@ class Board():
                                 and self.board[2 * rowVector + row][2 * columnVector + column] == 0:
                             piece.possibleLocations.append([2 * rowVector + row, 2 * columnVector + column])
 
+    def select(self, row, col):
+        return self.move(self.board[row][col])
+
     def move(self, piece):
         pressed = False
         while not pressed:
@@ -99,3 +102,22 @@ class Board():
     def update_location(self, piece, location):
         self.board[location[0]][location[1]] = piece
         piece.change_pos(location)
+
+    def checks_if_someone_won(self):
+        black = 0
+        white = 0
+        for row in rows:
+            for col in cols:
+                if self.board[row][col].white:
+                    white += 1
+                elif self.board[row][col].black:
+                    black += 1
+
+        if black == 0:
+            self.winner = "w"
+            return True
+        elif white == 0:
+            self.winner = "b"
+            return True
+
+        return False
