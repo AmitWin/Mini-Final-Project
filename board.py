@@ -1,6 +1,6 @@
 import pygame as pg
 from piece import Piece
-from info import yellow, blue, sqr_height, sqr_width, rows, cols, radius, adjust_location, clicked, win, adjust_position
+from info import yellow, blue, sqr_height, sqr_width, rows, cols, radius, adjust_location, clicked, adjust_position
 import time
 
 
@@ -23,6 +23,7 @@ class Board():
 
         self.winner = None
 
+        self.start_user = None
 
     def initiateBoard(self):
         for row in range(rows):
@@ -38,7 +39,7 @@ class Board():
                 else:
                     self.board[row].append(0)
 
-    def draw(self):
+    def draw(self, win):
         for i in range(rows):
             for j in range(cols):
                 if (i + j) % 2 == 0:
@@ -68,10 +69,10 @@ class Board():
     def select(self, row, col):
         return self.move(self.board[row][col])
 
-    def move(self, piece):
+    def move(self, piece, win):
         pressed = False
         while not pressed:
-            piece.highlight_possible_location()
+            piece.highlight_possible_location(win)
 
             keys = pg.key.get_pressed()
             for event in pg.event.get():

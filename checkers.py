@@ -1,6 +1,10 @@
 import pygame as pg
 from board import Board
-from info import boardWidth, boardHeight, clicked, win
+from info import boardWidth, boardHeight, clicked
+
+# Initiate Windows
+win = pg.display.set_mode((boardWidth, boardHeight))
+pg.display.set_caption("Checkers")
 
 board = Board()
 
@@ -19,7 +23,7 @@ def ValidClicked(mousePos, currentPlayer):
 
 
 def RedrawGameWindow():
-    board.draw()
+    board.draw(win)
     for rowPieces in board.board:
         for piece in rowPieces:
             if piece != 0:
@@ -48,7 +52,7 @@ def main():
                 clickedPiece = ValidClicked(mousePos, currentPlayer)
                 while clickedPiece:
                     board.update_moves(clickedPiece)
-                    clickedPiece = board.move(clickedPiece)
+                    clickedPiece = board.move(clickedPiece, win)
                     if clickedPiece == "moved":
                         currentPlayer *= -1
                         clickedPiece = None

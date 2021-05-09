@@ -8,15 +8,11 @@ cols = 8
 sqr_width = boardWidth / rows
 sqr_height = boardHeight / cols
 
-# Initiate Windows
-win = pg.display.set_mode((boardWidth, boardHeight))
-pg.display.set_caption("Checkers")
-
 # Colors
-black = [0, 0, 0]
-white = [255, 255, 255]
-yellow = [154, 205, 50]
-blue = [65, 105, 225]
+black = [144, 175, 197]
+white = [118, 54, 38]
+yellow = [51, 107, 135]
+blue = [42, 49, 50]
 
 # Piece Information
 radius = int(3 * sqr_width / 8)

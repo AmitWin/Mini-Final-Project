@@ -2,6 +2,7 @@ import socket
 import pickle
 import time
 
+
 class Client:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -13,7 +14,7 @@ class Client:
 
     def connect(self):
         self.client.connect(self.addr)
-        return self.client.recv(1024*32)
+        return self.client.recv(1024 * 32)
 
     def disconnect(self):
         self.client.close()
@@ -36,7 +37,4 @@ class Client:
             except socket.error as e:
                 print(e)
 
-
         return reply
-
-

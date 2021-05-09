@@ -11,15 +11,6 @@ port = 5555
 
 server_ip = socket.gethostbyname(server)
 
-try:
-    s.bind((server, port))
-
-except socket.error as e:
-    print(str(e))
-
-s.listen()
-print("[START] Waiting for a connection")
-
 connections = 0
 
 games = {0: Board()}
@@ -105,25 +96,37 @@ def threaded_client(conn, game):
     print("[DISCONNECT] Player", name, "left game", game)
     conn.close()
 
-while True:
-    if connections < 6:
-        conn, addr = s.accept()
-        g = -1
-        print("[CONNECT] New connection")
+def main():
+    try:
+        s.bind((server, port))
 
-        for game in games.keys():
-            if not games[game].ready:
-                g = game
+    except socket.error as e:
+        print(str(e))
 
-        if g == -1:
-            try:
-                g = list(games.keys())[-1] + 1
-                games[g] = Board()
-            except:
-                g = 0
-                games[g] = Board()
+    s.listen()
+    print("[START] Waiting for a connection")
 
-        print("[DATA] Number of Connections:", connections + 1)
-        print("[DATA] Number of Games:", len(games))
+    while True:
+        if connections < 6:
+            conn, addr = s.accept()
+            g = -1
+            print("[CONNECT] New connection")
 
-        start_new_thread(threaded_client, (conn, g))
+            for game in games.keys():
+                if not games[game].ready:
+                    g = game
+
+            if g == -1:
+                try:
+                    g = list(games.keys())[-1] + 1
+                    games[g] = Board()
+                except:
+                    g = 0
+                    games[g] = Board()
+
+            print("[DATA] Number of Connections:", connections + 1)
+            print("[DATA] Number of Games:", len(games))
+
+            start_new_thread(threaded_client, (conn, g))
+
+main()

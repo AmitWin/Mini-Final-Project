@@ -1,10 +1,16 @@
 import pygame as pg
 from board import Board
-from info import boardWidth, boardHeight, clicked, win
+from info import boardWidth, boardHeight, clicked
 from client import Client
 import time
 import pickle
 import os
+
+#add win in move on online chekers
+
+# Initiate Windows
+win = pg.display.set_mode((boardWidth, boardHeight))
+pg.display.set_caption("Checkers")
 
 pg.font.init()
 
@@ -27,12 +33,12 @@ def ValidClicked(mousePos, color):
 def RedrawGameWindow(p1time, p2time, color, ready):
     win.fill((128, 128, 128))
 
-    board.draw()
+    board.draw(win)
 
     for rowPieces in board.board:
         for piece in rowPieces:
             if piece != 0:
-                piece.draw()
+                piece.draw(win)
 
     formatTime1 = str(int(p1time // 60)) + ":" + str(int(p1time % 60))
     formatTime2 = str(int(p2time // 60)) + ":" + str(int(p2time % 60))
@@ -185,6 +191,7 @@ def main():
 
     c.disconnect()
     board = 0
+
 
 try:
     bo = connect()
