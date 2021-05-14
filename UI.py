@@ -1,38 +1,3 @@
-import subprocess
-import sys
-import pip_install
-
-
-def install(package):
-    subprocess.call([sys.executable, "-m", "pip", "install", package])
-
-
-try:
-    print("[GAME] Trying to import pygame")
-    import pygame
-except:
-    print("[EXCEPTION] Pygame not installed")
-
-    try:
-        print("[GAME] Trying to install pygame via pip")
-        import pip_install
-
-        install("pygame")
-        print("[GAME] Pygame has been installed")
-    except:
-        print("[EXCEPTION] Pip not installed on system")
-        print("[GAME] Trying to install pip")
-        pip_install.main()
-        print("[GAME] Pip has been installed")
-        try:
-            print("[GAME] Trying to install pygame")
-            import pip_install
-
-            install("pygame")
-            print("[GAME] Pygame has been installed")
-        except:
-            print("[ERROR 1] Pygame could not be installed")
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 import mysql.connector
@@ -426,11 +391,17 @@ class Ui_CheckersOptions(object):
         CheckersOptions.setStatusBar(self.statusbar)
         self.retranslateUi(CheckersOptions)
         self.PlayVSYourself.clicked.connect(lambda x: self.runCheckers())
+        self.PlayVSFriend.clicked.connect(lambda x: self)
         QtCore.QMetaObject.connectSlotsByName(CheckersOptions)
 
     def runCheckers(self):
         self.CheckersOptions.close()
         import checkers
+
+    def runOnlineCheckers(self):
+        self.CheckersOptions.close()
+        import client
+        client.main()
 
     def retranslateUi(self, CheckersOptions):
         _translate = QtCore.QCoreApplication.translate

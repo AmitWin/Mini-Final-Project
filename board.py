@@ -3,7 +3,6 @@ from piece import Piece
 from info import yellow, blue, sqr_height, sqr_width, rows, cols, radius, adjust_location, clicked, adjust_position
 import time
 
-
 class Board():
     def __init__(self):
         self.board = []
@@ -17,13 +16,11 @@ class Board():
 
         self.turn = "w"
 
-        self.time1 = 300
-        self.time2 = 300
-        self.startTime = time.time()
-
         self.winner = None
 
         self.start_user = None
+
+        self.initiateBoard()
 
     def initiateBoard(self):
         for row in range(rows):
@@ -122,3 +119,23 @@ class Board():
             return True
 
         return False
+    """
+    def turn(self):
+        keys = pg.key.get_pressed()
+        for event in pg.event.get():
+            if event.type == pg.QUIT or keys[pg.K_ESCAPE]:
+                run = False
+
+            if event.type == pg.MOUSEBUTTONDOWN:
+                mousePos = pg.mouse.get_pos()
+                clickedPiece = ValidClicked(mousePos, currentPlayer)
+                while clickedPiece:
+                    board.update_moves(clickedPiece)
+                    clickedPiece = board.move(clickedPiece, win)
+                    if clickedPiece == "moved":
+                        currentPlayer *= -1
+                        clickedPiece = None
+
+                    RedrawGameWindow(win)):
+                    
+    """
